@@ -8,7 +8,7 @@ until the weights converge. Genes are ranked by the final weight and the top
 --number_selected are kept.
 
 SAM runs its own preprocessing (cell-median library size, log2(1+x), zero out
-values <= 1, drop genes expressed in > 96% of cells) on raw counts from
+values <= 1, drop genes expressed in > --thresh_high of cells) on raw counts from
 rawdata_h5ad layers["counts"], subset to the cells and genes of --normalized_h5
 (the fe-scanpy pearson_residuals convention), so FILT's filter applies and the
 NORM arm does not change which genes are chosen. The written values are
@@ -39,6 +39,9 @@ def parse_args():
                    help="number of top-weighted genes to keep")
     p.add_argument("--random_seed", type=int, default=0,
                    help="seed for SAM's PCA and the hnswlib kNN index")
+    p.add_argument("--thresh_high", type=float, default=0.96,
+                   help="drop genes detected in more than this fraction of cells "
+                        "(upstream default 0.96; 1.0 keeps all)")
     return p.parse_args()
 
 
@@ -90,12 +93,12 @@ def hnsw_single_thread(x, ef=200, M=48, n_neighbors=100, seed=100):
     return p.knn_query(x, k=n_neighbors, num_threads=1)
 
 
-def rank_genes(counts, seed):
+def rank_genes(counts, seed, thresh_high):
     """counts: cells x genes AnnData of raw counts -> all genes, best SAM weight first."""
     # calc_nnm looks nearest_neighbors_hnsw up at call time
     ut.nearest_neighbors_hnsw = partial(hnsw_single_thread, seed=seed)
     sam = SAM(counts=counts)
-    sam.preprocess_data()
+    sam.preprocess_data(thresh_high=thresh_high)
     sam.run(projection=None, seed=seed)  # upstream defaults: k=20, npcs=150, n_genes=3000
     w = sam.adata.var["weights"]
     print(f"SAM: {(w > 0).sum()} / {len(w)} genes with nonzero weight")
@@ -108,8 +111,11 @@ def main():
     print(f"normalized_h5 (genes x cells): {norm.shape}")
     if not 0 < args.number_selected <= len(genes):
         raise ValueError(f"--number_selected must be in (0, {len(genes)}], got {args.number_selected}")
+    if not 0 < args.thresh_high <= 1:
+        raise ValueError(f"--thresh_high must be in (0, 1], got {args.thresh_high}")
 
-    selected = set(rank_genes(load_counts(args.rawdata_h5ad, cells, genes), args.random_seed)
+    selected = set(rank_genes(load_counts(args.rawdata_h5ad, cells, genes),
+                              args.random_seed, args.thresh_high)
                    [:args.number_selected])
     keep = np.array([g in selected for g in genes])
     assert keep.sum() == args.number_selected

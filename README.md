@@ -14,6 +14,10 @@ Upstream builds its hnswlib index on all cores, which changes the gene set
 between same-seed runs. The entrypoint swaps in a single-threaded build seeded
 with `--random_seed`, so a seed gives the same genes every run.
 
+`--thresh_high` (upstream default 0.96) drops genes detected in more than that
+fraction of cells before SAM runs; `1.0` keeps them. The default erases
+DE genes expressed in every cell, which Splatter simulations produce.
+
 ```bash
 pixi run check
 pixi run python feat-select.py --output_dir out --name <dataset> \
