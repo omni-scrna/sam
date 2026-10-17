@@ -1,9 +1,11 @@
 cff-version: 1.2.0
 message: "If you use this module in your publication, please cite as below."
 type: software
-title: "SAM"
+title: "omnibenchmark module for SAM (Self-Assembling Manifold)"
 abstract: |
-  Self-Assembling Manifold gene selection via atarashansky/self-assembling-manifold
+  Omnibenchmark FEAT module wrapping the Self-Assembling Manifold gene
+  selection from atarashansky/self-assembling-manifold. Cite the SAM
+  software and article under references for the method itself.
 authors:
   - family-names: "carrillo"
     given-names: "ben"
