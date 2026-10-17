@@ -1,4 +1,4 @@
-# omni-sam
+# sam
 
 FEAT stage arm: Self-Assembling Manifold gene selection with
 [atarashansky/self-assembling-manifold](https://github.com/atarashansky/self-assembling-manifold)

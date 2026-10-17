@@ -13,8 +13,8 @@ authors:
 date-released: "2026-10-17"
 version: "0.1.0"
 license: MIT
-url: "https://github.com/omni-scrna/omni-sam"
-repository-code: "https://github.com/omni-scrna/omni-sam"
+url: "https://github.com/omni-scrna/sam"
+repository-code: "https://github.com/omni-scrna/sam"
 keywords:
   - bioinformatics
   - computational-biology
