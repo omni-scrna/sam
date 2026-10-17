@@ -1,0 +1,44 @@
+cff-version: 1.2.0
+message: "If you use this module in your publication, please cite as below."
+type: software
+title: "SAM"
+abstract: |
+  Self-Assembling Manifold gene selection via atarashansky/self-assembling-manifold
+authors:
+  - family-names: "carrillo"
+    given-names: "ben"
+    email: "ben.uzh@proton.me"
+date-released: "2026-10-17"
+version: "0.1.0"
+license: MIT
+url: "https://github.com/omni-scrna/omni-sam"
+repository-code: "https://github.com/omni-scrna/omni-sam"
+keywords:
+  - bioinformatics
+  - computational-biology
+  - benchmark
+  - omnibenchmark
+  - module
+references:
+  - title: "self-assembling-manifold"
+    type: software
+    authors:
+      - family-names: "Tarashansky"
+        given-names: "Alexander J."
+    url: "https://github.com/atarashansky/self-assembling-manifold"
+  - title: "Self-assembling manifolds in single-cell RNA sequencing data"
+    type: article
+    authors:
+      - family-names: "Tarashansky"
+        given-names: "Alexander J."
+      - family-names: "Xue"
+        given-names: "Yuan"
+      - family-names: "Li"
+        given-names: "Pengyang"
+      - family-names: "Quake"
+        given-names: "Stephen R."
+      - family-names: "Wang"
+        given-names: "Bo"
+    journal: "eLife"
+    year: 2019
+    doi: "10.7554/eLife.48994"
