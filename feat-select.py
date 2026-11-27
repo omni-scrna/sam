@@ -121,9 +121,9 @@ def main():
     assert keep.sum() == args.number_selected
     print(f"selected {keep.sum()} / {len(genes)} genes")
 
-    out = Path(args.output_dir)
-    out.mkdir(parents=True, exist_ok=True)
-    write_tenx(out / f"{args.name}_normalized_selected.h5", norm[keep, :], genes[keep], cells)
+    out = cli.output_path(args, "normalized_selected_h5", "_normalized_selected.h5")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    write_tenx(out, norm[keep, :], genes[keep], cells)
 
 
 if __name__ == "__main__":
